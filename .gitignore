@@ -1,0 +1,7 @@
+/.build
+/.build.*
+
+/Package.resolved
+
+/.vscode/launch.json
+/*.code-workspace

@@ -48,13 +48,20 @@ extension JavaScriptDecoder {
     @inlinable public func values<Value>(
         as _: Value.Type
     ) throws -> [ObjectKey: Value] where Value: LoadableFromJSValue {
+        try self.values(storage: [ObjectKey: Value].init(minimumCapacity:)) { $0[$1] = $2 }
+    }
+
+    @inlinable public func values<T, Value>(
+        storage: (_ count: Int) throws -> T,
+        combine: (inout T, ObjectKey, Value) throws -> (),
+    ) throws -> T where Value: LoadableFromJSValue {
         guard
         case .object(let object)? = JavaScriptClass.Object.constructor.keys?(self.object) else {
             fatalError("JavaScript Object.keys() did not return an object!")
         }
         let keys: JavaScriptDecoder<JavaScriptArrayKey> = try .init(array: object)
         let count: Int = try keys[.length].decode()
-        return try (0 ..< count).reduce(into: .init(minimumCapacity: count)) {
+        return try (0 ..< count).reduce(into: try storage(count)) {
             guard case .string(let key) = keys[$1].value else {
                 return
             }
@@ -62,7 +69,7 @@ extension JavaScriptDecoder {
                 throw KeyspaceError.init(invalid: key.description)
             }
 
-            $0[key] = try self[key].decode()
+            try combine(&$0, key, try self[key].decode())
         }
     }
 }

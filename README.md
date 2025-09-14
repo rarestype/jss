@@ -15,11 +15,11 @@ To interact with the web page, you need a way to pass data and call functions be
 
 A common approach is to serialize data into a format like JSON, pass it as a string, and then deserialize it on the other side. However, this has some drawbacks:
 
--   *Performance Overhead*: Serialization and deserialization can be slow, especially for large or complex data structures.
+*Performance Overhead*: Serialization and deserialization can be slow, especially for large or complex data structures.
 
--   *Boilerplate Code*: You have to write and maintain code for encoding and decoding your data on both the Swift and JavaScript sides.
+*Boilerplate Code*: JSON is only a subset of JavaScript, which means you often need to write additional, parallel decoding and encoding logic to handle types (such as `BigInt`) that cannot be represented in JSON. 
 
--   *Loss of Type Safety*: You’re essentially passing strings back and forth, which means you lose the benefits of Swift’s strong type system at the boundary between the two languages.
+*Loss of Type Safety*: You’re essentially passing strings back and forth, which means you lose the benefits of Swift’s strong type system at the boundary between the two languages.
 
 
 ## Direct Object Access without Serialization
@@ -40,7 +40,7 @@ These are the two main protocols that you'll conform your Swift types to.
 
 These are the workhorses that do the actual encoding and decoding.
 
--   `JavaScriptEncoder` takes a Swift object and, by using key-value pairs that you define in your Swift code, it populates a new JavaScript object. The keys are typically defined in an enum that conforms to `JSString`, which provides a typesafe way to refer to the JavaScript object's properties.
+-   `JavaScriptEncoder` takes a Swift object and, by using key-value pairs that you define in your Swift code, it populates a new JavaScript object. The keys are typically defined in an enum with `JSString` raw values, which provides a typesafe way to refer to the JavaScript object’s properties.
 
 -   `JavaScriptDecoder` does the reverse. It wraps a `JSObject` and allows you to access its properties using the same `JSString`-backed enum to decode the values into a new Swift object.
 

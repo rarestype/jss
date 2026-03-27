@@ -5,6 +5,8 @@ swift --version
 swift package dollup --allow-writing-to-package-directory
 git diff --exit-code
 
+# must disable SS prebuilts, as they prevent some JSK macro from compiling successfully
 swift build -c release \
     --explicit-target-dependency-import-check=error \
+    --disable-experimental-prebuilts \
     --build-tests

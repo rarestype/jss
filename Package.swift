@@ -1,15 +1,16 @@
-// swift-tools-version:6.1
+// swift-tools-version:6.2
 import PackageDescription
 import typealias Foundation.ProcessInfo
 
 let package: Package = .init(
     name: "jss",
-    platforms: [.macOS(.v15), .iOS(.v18), .tvOS(.v18), .visionOS(.v2), .watchOS(.v11)],
+    platforms: [.macOS(.v15)],
     products: [
         .library(name: "JavaScriptInterop", targets: ["JavaScriptInterop"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/swiftwasm/JavaScriptKit", from: "0.33.1"),
+        .package(url: "https://github.com/ordo-one/dollup", from: "1.0.1"),
+        .package(url: "https://github.com/swiftwasm/JavaScriptKit", from: "0.48.0"),
     ],
     targets: [
         .target(

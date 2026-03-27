@@ -1,10 +1,21 @@
-[![Tests](https://github.com/tayloraswift/jss/actions/workflows/Tests.yml/badge.svg)](https://github.com/tayloraswift/jss/actions/workflows/Tests.yml)
-[![Documentation](https://github.com/tayloraswift/jss/actions/workflows/Documentation.yml/badge.svg)](https://github.com/tayloraswift/jss/actions/workflows/Documentation.yml)
+<div align="center">
+
+🥖 &nbsp; **jss** &nbsp; 🥖
 
 A lightweight, serialization-free bridge for passing data between Swift and JavaScript in WebAssembly applications.
 
 [documentation](https://swiftinit.org/docs/jss) ·
 [license](LICENSE)
+
+</div>
+
+
+## Requirements
+
+The jss library requires Swift 6.2 or later.
+
+<!-- DO NOT EDIT BELOW! AUTOSYNC CONTENT [STATUS TABLE] -->
+<!-- DO NOT EDIT ABOVE! AUTOSYNC CONTENT [STATUS TABLE] -->
 
 
 ## Why this library?
@@ -17,7 +28,7 @@ A common approach is to serialize data into a format like JSON, pass it as a str
 
 *Performance Overhead*: Serialization and deserialization can be slow, especially for large or complex data structures.
 
-*Boilerplate Code*: JSON is only a subset of JavaScript, which means you often need to write additional, parallel decoding and encoding logic to handle types (such as `BigInt`) that cannot be represented in JSON. 
+*Boilerplate Code*: JSON is only a subset of JavaScript, which means you often need to write additional, parallel decoding and encoding logic to handle types (such as `BigInt`) that cannot be represented in JSON.
 
 *Loss of Type Safety*: You’re essentially passing strings back and forth, which means you lose the benefits of Swift’s strong type system at the boundary between the two languages.
 

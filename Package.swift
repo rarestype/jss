@@ -6,18 +6,43 @@ let package: Package = .init(
     name: "jss",
     platforms: [.macOS(.v15)],
     products: [
-        .library(name: "JavaScriptInterop", targets: ["JavaScriptInterop"]),
+        .library(name: "JavaScript", targets: ["JavaScript"]),
+    ],
+    traits: [
+        "Headless",
+        "WebAssembly",
+        .default(enabledTraits: ["WebAssembly"]),
     ],
     dependencies: [
         .package(url: "https://github.com/ordo-one/dollup", from: "1.0.1"),
+        .package(url: "https://github.com/rarestype/swift-json", from: "2.3.2"),
         .package(url: "https://github.com/swiftwasm/JavaScriptKit", from: "0.48.0"),
     ],
     targets: [
         .target(
-            name: "JavaScriptInterop",
+            name: "JavaScript",
             dependencies: [
-                .product(name: "JavaScriptBigIntSupport", package: "JavaScriptKit"),
-                .product(name: "JavaScriptKit", package: "JavaScriptKit"),
+                .target(name: "JavaScriptBackend"),
+            ]
+        ),
+        .target(
+            name: "JavaScriptBackend",
+            dependencies: [
+                .product(
+                    name: "JavaScriptPersistence",
+                    package: "swift-json",
+                    condition: .when(traits: ["Headless"]),
+                ),
+                .product(
+                    name: "JavaScriptBigIntSupport",
+                    package: "JavaScriptKit",
+                    condition: .when(traits: ["WebAssembly"]),
+                ),
+                .product(
+                    name: "JavaScriptKit",
+                    package: "JavaScriptKit",
+                    condition: .when(traits: ["WebAssembly"]),
+                ),
             ]
         ),
     ]

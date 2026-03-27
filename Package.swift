@@ -52,8 +52,7 @@ for target: Target in package.targets {
     let swift: [SwiftSetting]
     let c: [CSetting]
 
-    switch ProcessInfo.processInfo.environment["SWIFT_TESTABLE"]
-    {
+    switch ProcessInfo.processInfo.environment["SWIFT_TESTABLE"] {
     case "1"?, "true"?:
         swift = [
             .enableUpcomingFeature("ExistentialAny"),
@@ -69,8 +68,7 @@ for target: Target in package.targets {
         fatalError("Unexpected 'SWIFT_TESTABLE' value: \(value)")
     }
 
-    switch ProcessInfo.processInfo.environment["SWIFT_WASM_SIMD128"]
-    {
+    switch ProcessInfo.processInfo.environment["SWIFT_WASM_SIMD128"] {
     case "1"?, "true"?:
         c = [
             .unsafeFlags(["-msimd128"])

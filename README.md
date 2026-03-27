@@ -26,14 +26,14 @@ To interact with the web page, you need a way to pass data and call functions be
 
 A common approach is to serialize data into a format like JSON, pass it as a string, and then deserialize it on the other side. However, this has some drawbacks:
 
-*Performance Overhead*: Serialization and deserialization can be slow, especially for large or complex data structures.
+*Performance overhead*: Serialization and deserialization can be slow, especially for large or complex data structures.
 
-*Boilerplate Code*: JSON is only a subset of JavaScript, which means you often need to write additional, parallel decoding and encoding logic to handle types (such as `BigInt`) that cannot be represented in JSON.
+*Boilerplate code*: JSON is only a subset of JavaScript, which means you often need to write additional, parallel decoding and encoding logic to handle types (such as `BigInt`) that cannot be represented in JSON.
 
-*Loss of Type Safety*: You’re essentially passing strings back and forth, which means you lose the benefits of Swift’s strong type system at the boundary between the two languages.
+*Loss of type safety*: You’re essentially passing strings back and forth, which means you lose the benefits of Swift’s strong type system at the boundary between the two languages.
 
 
-## Direct Object Access without Serialization
+## Direct object access without serialization
 
 The JavaScriptKit-based abstractions in this library solve these problems by providing a way to directly access and manipulate JavaScript objects from Swift, and vice versa, without ever serializing the data. This is achieved through a set of protocols and generic types that create a powerful and flexible binding layer.
 
@@ -64,7 +64,7 @@ The `LoadableFromJSValue` and `ConvertibleToJSValue` are generally used with `Ra
 In situations where you want to use a type’s `LosslessStringConvertible` representation, use the `LoadableFromJSString` and `ConvertibleToJSString` protocols instead.
 
 
-## Example Usage
+## Example usage
 
 Here’s a quick example of how to make a Swift struct compatible with the JavaScript binding layer.
 

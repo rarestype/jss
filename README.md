@@ -15,6 +15,10 @@ A lightweight, serialization-free bridge for passing data between Swift and Java
 The jss library requires Swift 6.2 or later.
 
 <!-- DO NOT EDIT BELOW! AUTOSYNC CONTENT [STATUS TABLE] -->
+| Platform | Status |
+| -------- | ------|
+| 🐧 Linux | [![Status](https://raw.githubusercontent.com/rarestype/jss/refs/badges/ci/Tests/Linux/status.svg)](https://github.com/rarestype/jss/actions/workflows/Tests.yml) |
+| 🍏 Darwin | [![Status](https://raw.githubusercontent.com/rarestype/jss/refs/badges/ci/Tests/macOS/status.svg)](https://github.com/rarestype/jss/actions/workflows/Tests.yml) |
 <!-- DO NOT EDIT ABOVE! AUTOSYNC CONTENT [STATUS TABLE] -->
 
 

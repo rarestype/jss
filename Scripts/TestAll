@@ -10,12 +10,13 @@ git diff --exit-code
 # https://github.com/swiftlang/swift-syntax/issues/3317
 swift build -c release \
     --explicit-target-dependency-import-check=warn \
-    --build-tests
+    --build-tests \
+    --scratch-path .build.wasm
 
 # test the headless mode
 swift build -c release \
     --explicit-target-dependency-import-check=warn \
     --build-tests \
     --disable-default-traits \
-    --traits Headless
-
+    --traits Headless\
+    --scratch-path .build.host

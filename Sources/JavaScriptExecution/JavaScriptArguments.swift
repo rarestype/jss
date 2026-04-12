@@ -1,4 +1,4 @@
-import JavaScript
+public import JavaScript
 
 @frozen @usableFromInline struct JavaScriptArguments {
     @usableFromInline let list: [JSValue]

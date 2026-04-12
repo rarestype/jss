@@ -1,5 +1,6 @@
-import JavaScript
-import JavaScriptEventLoop
+#if canImport(JavaScriptEventLoop)
+public import JavaScript
+public import JavaScriptEventLoop
 
 @frozen public struct JavaScriptExecutionContext {
     private let metatype: JSObject
@@ -66,3 +67,4 @@ extension JavaScriptExecutionContext {
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-import JavaScript
+#if canImport(JavaScriptEventLoop)
+public import JavaScript
 internal import JavaScriptKit
 
 @frozen public struct JavaScriptModule<Symbol>: ~Copyable where Symbol: Identifiable<String> {
@@ -105,3 +106,4 @@ extension JavaScriptModule {
         )
     }
 }
+#endif

@@ -1,4 +1,4 @@
-import JavaScript
+public import JavaScript
 
 @frozen @usableFromInline struct JavaScriptPromiseResolvers {
     let success: ((any ConvertibleToJSValue...) -> JSValue)

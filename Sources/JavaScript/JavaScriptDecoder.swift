@@ -31,21 +31,27 @@ extension JavaScriptDecoder {
         }
     }
 
-    #if WebAssembly
     @inlinable public subscript(
         _ key: ObjectKey
     ) -> WitnessEntry<((any ConvertibleToJSValue...) -> JSValue)>? {
+        #if WebAssembly
         let key: JSString = key.rawValue
         return self.object[key].map { .init(id: key, value: $0) }
+        #else
+        return nil
+        #endif
     }
 
     @inlinable public subscript(
         _ key: ObjectKey
     ) -> WitnessEntry<((any ConvertibleToJSValue...) -> JSValue)?> {
         let key: JSString = key.rawValue
+        #if WebAssembly
         return .init(id: key, value: self.object[key])
+        #else
+        return .init(id: key, value: nil)
+        #endif
     }
-    #endif
 }
 extension JavaScriptDecoder<JavaScriptArrayKey> {
     @inlinable public subscript(_ index: Int) -> Position {
@@ -72,11 +78,12 @@ extension JavaScriptDecoder {
         }
     }
 
-    #if WebAssembly
     @inlinable public func values<T, Value>(
         storage: (_ count: Int) throws -> T,
         combine: (inout T, ObjectKey, Value) throws -> (),
     ) throws -> T where Value: LoadableFromJSValue {
+        #if WebAssembly
+
         guard
         let object: JSObject = JavaScriptClass.Object.constructor.keys?(
             self.object
@@ -95,12 +102,9 @@ extension JavaScriptDecoder {
 
             try combine(&$0, key, try self[key].decode())
         }
-    }
-    #else
-    @inlinable public func values<T, Value>(
-        storage: (_ count: Int) throws -> T,
-        combine: (inout T, ObjectKey, Value) throws -> (),
-    ) throws -> T where Value: LoadableFromJSValue {
+
+        #else
+
         let properties: [String: JSValue] = self.object.properties
         return try properties.reduce(into: try storage(properties.count)) {
             let id: JSString = .init($1.key)
@@ -111,6 +115,7 @@ extension JavaScriptDecoder {
             let field: Field = .init(id: id, value: $1.value)
             try combine(&$0, key, try field.decode())
         }
+
+        #endif
     }
-    #endif
 }

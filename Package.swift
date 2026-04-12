@@ -24,7 +24,11 @@ let package: Package = .init(
             name: "JavaScriptExecution",
             dependencies: [
                 .target(name: "JavaScript"),
-                .product(name: "JavaScriptEventLoop", package: "JavaScriptKit"),
+                .product(
+                    name: "JavaScriptEventLoop",
+                    package: "JavaScriptKit",
+                    condition: .when(traits: ["WebAssembly"]),
+                ),
             ]
         ),
         .target(

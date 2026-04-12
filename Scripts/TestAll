@@ -5,16 +5,16 @@ swift --version
 swift package dollup --allow-writing-to-package-directory
 git diff --exit-code
 
-# must disable SS prebuilts, as they prevent some JSK macro from compiling successfully
+# must downgrade to --explicit-target-dependency-import-check=warn due to SS prebuilts
+# there is also a second, independent issue causing a similar problem
+# https://github.com/swiftlang/swift-syntax/issues/3317
 swift build -c release \
-    --explicit-target-dependency-import-check=error \
-    --disable-experimental-prebuilts \
+    --explicit-target-dependency-import-check=warn \
     --build-tests
 
 # test the headless mode
 swift build -c release \
-    --explicit-target-dependency-import-check=error \
-    --disable-experimental-prebuilts \
+    --explicit-target-dependency-import-check=warn \
     --build-tests \
     --disable-default-traits \
     --traits Headless

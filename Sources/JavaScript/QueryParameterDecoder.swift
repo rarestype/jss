@@ -15,6 +15,9 @@ extension QueryParameterDecoder {
         }
         self.init(get: get)
     }
+    #else
+    @available(*, unavailable, message: "QueryParameterDecoder cannot be represented by JSON")
+    @inlinable init(wrapping object: JSObject) { fatalError() }
     #endif
 }
 extension QueryParameterDecoder {

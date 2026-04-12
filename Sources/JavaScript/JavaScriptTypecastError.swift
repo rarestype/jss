@@ -36,3 +36,28 @@ extension JavaScriptTypecastError {
         }
     }
 }
+extension JavaScriptTypecastError: CustomStringConvertible {
+    public var description: String {
+        let type: String = .init(reflecting: T.self)
+        switch self {
+        case .boolean(let self):
+            return "cannot convert boolean '\(self)' to type '\(type)'"
+        case .string(let self):
+            return "cannot convert string '\(self)' to type '\(type)'"
+        case .number(let self):
+            return "cannot convert number '\(self)' to type '\(type)'"
+        case .object:
+            return "cannot convert object to type '\(type)'"
+        case .null:
+            return "cannot convert null to type '\(type)'"
+        case .undefined:
+            return "cannot convert undefined to type '\(type)'"
+        case .function:
+            return "cannot convert function to type '\(type)'"
+        case .symbol:
+            return "cannot convert symbol to type '\(type)'"
+        case .bigint:
+            return "cannot convert bigint to type '\(type)'"
+        }
+    }
+}

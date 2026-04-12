@@ -30,6 +30,22 @@ extension JavaScriptDecoder {
             return .init(id: key, value: value)
         }
     }
+
+    #if WebAssembly
+    @inlinable public subscript(
+        _ key: ObjectKey
+    ) -> WitnessEntry<((any ConvertibleToJSValue...) -> JSValue)>? {
+        let key: JSString = key.rawValue
+        return self.object[key].map { .init(id: key, value: $0) }
+    }
+
+    @inlinable public subscript(
+        _ key: ObjectKey
+    ) -> WitnessEntry<((any ConvertibleToJSValue...) -> JSValue)?> {
+        let key: JSString = key.rawValue
+        return .init(id: key, value: self.object[key])
+    }
+    #endif
 }
 extension JavaScriptDecoder<JavaScriptArrayKey> {
     @inlinable public subscript(_ index: Int) -> Position {

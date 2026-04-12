@@ -10,3 +10,12 @@ swift build -c release \
     --explicit-target-dependency-import-check=error \
     --disable-experimental-prebuilts \
     --build-tests
+
+# test the headless mode
+swift build -c release \
+    --explicit-target-dependency-import-check=error \
+    --disable-experimental-prebuilts \
+    --build-tests \
+    --disable-default-traits \
+    --traits Headless
+

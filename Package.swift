@@ -16,7 +16,7 @@ let package: Package = .init(
     ],
     dependencies: [
         .package(url: "https://github.com/ordo-one/dollup", from: "1.0.2"),
-        .package(url: "https://github.com/rarestype/swift-json", from: "2.3.2"),
+        .package(url: "https://github.com/rarestype/swift-json", from: "3.3.0"),
         .package(url: "https://github.com/swiftwasm/JavaScriptKit", from: "0.50.1"),
     ],
     targets: [

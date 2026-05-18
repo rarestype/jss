@@ -16,6 +16,16 @@ extension JSObject {
         #endif
     }
 
+    @inlinable static func allocate<ObjectKey>(
+        _ type: JavaScriptClass,
+        _: ObjectKey.Type = ObjectKey.self,
+        with encode: (inout JavaScriptEncoder<ObjectKey>) -> ()
+    ) -> JSObject {
+        let encoded: JSObject = .allocate(type)
+        var encoder: JavaScriptEncoder<ObjectKey> = .init(wrapping: encoded)
+        encode(&encoder)
+        return encoded
+    }
 
     @inlinable func `is`(_ type: JavaScriptClass) -> Bool {
         #if WebAssembly
@@ -37,32 +47,32 @@ extension JSObject {
     }
 
     @inlinable public static func new<ObjectKey>(
+        _: ObjectKey.Type = ObjectKey.self,
+        with encode: (inout JavaScriptEncoder<ObjectKey>) -> ()
+    ) -> JSObject {
+        .allocate(.Object, with: encode)
+    }
+
+    @inlinable public static func new<ObjectKey>(
         encoding encodable: some JavaScriptEncodable<ObjectKey>
     ) -> JSObject {
-        let encoded: JSObject = .allocate(.Object)
-        var encoder: JavaScriptEncoder<ObjectKey> = .init(wrapping: encoded)
-        encodable.encode(to: &encoder)
-        return encoded
+        .allocate(.Object) { encodable.encode(to: &$0) }
     }
 
     @inlinable public static func new(
         encoding encodable: some ConvertibleToJSArray
     ) -> JSObject {
-        let encoded: JSObject = .allocate(.Array)
-        var encoder: JavaScriptEncoder<JavaScriptArrayKey> = .init(wrapping: encoded)
-        encodable.encode(to: &encoder)
-        return encoded
+        .allocate(.Array) { encodable.encode(to: &$0) }
     }
 
     @inlinable public static func new<each Element>(
         array element: repeat each Element
     ) -> JSObject where repeat each Element: ConvertibleToJSValue {
-        let encoded: JSObject = .allocate(.Array)
-        var encoder: JavaScriptEncoder<JavaScriptArrayKey> = .init(wrapping: encoded)
-        for element: _ in repeat each element {
-            encoder.push(element)
+        .allocate(.Array) {
+            for element: _ in repeat each element {
+                $0.push(element)
+            }
         }
-        return encoded
     }
 }
 extension JSObject: LoadableFromJSValue {

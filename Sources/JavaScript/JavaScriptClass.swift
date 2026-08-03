@@ -9,6 +9,7 @@ import JavaScriptBackend
     case Float32Array
     case Float64Array
 
+    case Uint8ClampedArray
     case Uint8Array
     case Uint16Array
     case Uint32Array

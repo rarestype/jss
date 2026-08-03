@@ -10,8 +10,8 @@ extension JSObject {
             return .array()
         case .Object:
             return .object()
-        case .URLSearchParams:
-            fatalError("URLSearchParams is not supported in this environment")
+        default:
+            fatalError("class '\(type)' is not supported in this environment")
         }
         #endif
     }
@@ -29,12 +29,12 @@ extension JSObject {
 
     @inlinable func `is`(_ type: JavaScriptClass) -> Bool {
         #if WebAssembly
-        self.isInstanceOf(JSObject.global[type.rawValue].function!)
+        self.isInstanceOf(type.constructor)
         #else
         switch type {
         case .Array: self.isArray
         case .Object: true
-        case .URLSearchParams: false
+        default: false
         }
         #endif
     }

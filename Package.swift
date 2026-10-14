@@ -24,6 +24,7 @@ let package: Package = .init(
             name: "JavaScriptExecution",
             dependencies: [
                 .target(name: "JavaScript"),
+                .target(name: "JavaScriptBusywait"),
                 .product(
                     name: "JavaScriptEventLoop",
                     package: "JavaScriptKit",
@@ -36,6 +37,9 @@ let package: Package = .init(
             dependencies: [
                 .target(name: "JavaScriptBackend"),
             ]
+        ),
+        .target(
+            name: "JavaScriptBusywait",
         ),
         .target(
             name: "JavaScriptBackend",

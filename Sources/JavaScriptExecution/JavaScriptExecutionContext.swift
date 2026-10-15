@@ -18,7 +18,9 @@ extension JavaScriptExecutionContext {
     ) {
         // browsers forbid the main thread from waiting on a contended lock, and throw instead,
         // which kills the whole module. `AsyncStream` and the Swift runtime lock through
-        // wasi-libc, which can spin instead of waiting, but only if we ask it to.
+        // wasi-libc, which can spin instead of waiting, but only if we ask it to. this does
+        // *not* cover `Synchronization.Mutex`, which waits with `memory.atomic.wait32` directly,
+        // so code that can run on the main thread must still never call `withLock`.
         jss_enable_futex_busywait_on_current_thread()
         JavaScriptEventLoop.installGlobalExecutor()
 
